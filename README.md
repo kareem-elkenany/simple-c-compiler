@@ -24,7 +24,7 @@ Input Code → Scanner (Flex) → tokens.txt → Parser → AST → Visualizer �
 
 ---
 
-## ⚙️ How It Works
+## How It Works
 
 1. User writes code in `data/tiny_code.txt`
 2. Scanner (Flex) reads input and generates `tokens.txt`
