@@ -1,2 +1,1 @@
-user_name_21 is "This is a string with spaces"
-_invalid_start is ""
+result is 10 plus 5 multiplied by 2 divided by x

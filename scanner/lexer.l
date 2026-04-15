@@ -32,6 +32,7 @@
 
 /*ignore case for all rules */
 %option caseless
+%option yylineno
 
 /* 1. EOL Handling: Collapse newlines and ignore trailing spaces */
 EOL ([ \t]*\n)+
@@ -208,7 +209,7 @@ WHITESPACE [ \t]+
 
 {WHITESPACE} { /* ignore whitespace */ }
 
-. { printf("Error: Unexpected character '%s'\n", yytext); }
+. { printf("Error on line %d: Unexpected character '%s'\n", yylineno, yytext); }
 
 %%
 
