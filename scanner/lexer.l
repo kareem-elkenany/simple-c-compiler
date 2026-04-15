@@ -34,7 +34,7 @@
 %option caseless
 
 /* 1. EOL Handling: Collapse newlines and ignore trailing spaces */
-EOL [ \t]*\n+
+EOL ([ \t]*\n)+
 IF "if"
 ELSE "else"
 WHILE "while"

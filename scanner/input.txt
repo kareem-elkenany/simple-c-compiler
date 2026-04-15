@@ -1,8 +1,2 @@
-x is 7
-y is 0
-While x greater than 5
- {
-y is y plus x
-x is x minus 1
-}
-print y
+user_name_21 is "This is a string with spaces"
+_invalid_start is ""
