@@ -578,8 +578,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 ".\\lexer.l"
-#line 2 ".\\lexer.l"
+#line 1 "lexer.l"
+#line 2 "lexer.l"
     
     #include <stdio.h>
 
@@ -623,7 +623,7 @@ char *yytext;
  */
 #include <unistd.h>
 #endif
-    
+
 #ifndef YY_EXTRA_TYPE
 #define YY_EXTRA_TYPE void *
 #endif
@@ -829,7 +829,7 @@ YY_DECL
 		}
 
 	{
-#line 63 ".\\lexer.l"
+#line 63 "lexer.l"
 
 #line 834 "lex.yy.c"
 
@@ -901,7 +901,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 64 ".\\lexer.l"
+#line 64 "lexer.l"
 { 
         fprintf(tokenFile, "(\\n, EOL)\n"); 
         printf("(\\n, EOL)\n"); 
@@ -912,218 +912,218 @@ YY_RULE_SETUP
 /* Multi-word operators first */
 case 2:
 YY_RULE_SETUP
-#line 73 ".\\lexer.l"
+#line 73 "lexer.l"
 { 
-        fprintf(tokenFile, "(%s, LESSOREQUAL)\n", yytext); 
-        printf("(%s, LESSOREQUAL)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, LESSOREQUAL)\n", yylineno, yytext); 
+        printf("(%d, %s, LESSOREQUAL)\n", yylineno, yytext); 
         return LESSOREQUAL; 
       }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 79 ".\\lexer.l"
+#line 79 "lexer.l"
 { 
-        fprintf(tokenFile, "(%s, GREATEROREQUAL)\n", yytext); 
-        printf("(%s, GREATEROREQUAL)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, GREATEROREQUAL)\n", yylineno, yytext); 
+        printf("(%d, %s, GREATEROREQUAL)\n", yylineno, yytext); 
         return GREATEROREQUAL; 
       }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 85 ".\\lexer.l"
+#line 85 "lexer.l"
 { 
-        fprintf(tokenFile, "(%s, MULTIPLICATION)\n", yytext); 
-        printf("(%s, MULTIPLICATION)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, MULTIPLICATION)\n", yylineno, yytext); 
+        printf("(%d, %s, MULTIPLICATION)\n", yylineno, yytext); 
         return MULTIPLICATION; 
       }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 91 ".\\lexer.l"
+#line 91 "lexer.l"
 { 
-        fprintf(tokenFile, "(%s, DIVISION)\n", yytext); 
-        printf("(%s, DIVISION)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, DIVISION)\n", yylineno, yytext); 
+        printf("(%d, %s, DIVISION)\n", yylineno, yytext); 
         return DIVISION; 
       }
 	YY_BREAK
 /* the shorter phrases */
 case 6:
 YY_RULE_SETUP
-#line 99 ".\\lexer.l"
+#line 99 "lexer.l"
 { 
-        fprintf(tokenFile, "(%s, LESSTHAN)\n", yytext); 
-        printf("(%s, LESSTHAN)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, LESSTHAN)\n", yylineno, yytext); 
+        printf("(%d, %s, LESSTHAN)\n", yylineno, yytext); 
         return LESSTHAN; 
       }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 105 ".\\lexer.l"
+#line 105 "lexer.l"
 { 
-        fprintf(tokenFile, "(%s, GREATERTHAN)\n", yytext); 
-        printf("(%s, GREATERTHAN)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, GREATERTHAN)\n", yylineno, yytext); 
+        printf("(%d, %s, GREATERTHAN)\n", yylineno, yytext); 
         return GREATERTHAN; 
       }
 	YY_BREAK
 /* Keywords and Braces */
 case 8:
 YY_RULE_SETUP
-#line 113 ".\\lexer.l"
+#line 113 "lexer.l"
 { 
-        fprintf(tokenFile, "(%s, IF)\n", yytext); 
-        printf("(%s, IF)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, IF)\n", yylineno, yytext); 
+        printf("(%d, %s, IF)\n", yylineno, yytext); 
         return IF; 
       }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 119 ".\\lexer.l"
+#line 119 "lexer.l"
 { 
-        fprintf(tokenFile, "(%s, ELSE)\n", yytext); 
-        printf("(%s, ELSE)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, ELSE)\n", yylineno, yytext); 
+        printf("(%d, %s, ELSE)\n", yylineno, yytext); 
         return ELSE; 
       }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 125 ".\\lexer.l"
+#line 125 "lexer.l"
 { 
-        fprintf(tokenFile, "(%s, WHILE)\n", yytext); 
-        printf("(%s, WHILE)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, WHILE)\n", yylineno, yytext); 
+        printf("(%d, %s, WHILE)\n", yylineno, yytext); 
         return WHILE; 
       }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 131 ".\\lexer.l"
+#line 131 "lexer.l"
 {
-        fprintf(tokenFile, "(%s, PRINT)\n", yytext);
-        printf("(%s, PRINT)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, PRINT)\n", yylineno, yytext);
+        printf("(%d, %s, PRINT)\n", yylineno, yytext);
         return PRINT;
         }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 137 ".\\lexer.l"
+#line 137 "lexer.l"
 {
-        fprintf(tokenFile, "(%s, READ)\n", yytext);
-        printf("(%s, READ)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, READ)\n", yylineno, yytext);
+        printf("(%d, %s, READ)\n", yylineno, yytext);
         return READ;
         }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 143 ".\\lexer.l"
+#line 143 "lexer.l"
 { 
-        fprintf(tokenFile, "(%s, OPENBRACE)\n", yytext); 
-        printf("(%s, OPENBRACE)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, OPENBRACE)\n", yylineno, yytext); 
+        printf("(%d, %s, OPENBRACE)\n", yylineno, yytext); 
         return OPENBRACE; 
       }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 149 ".\\lexer.l"
+#line 149 "lexer.l"
 { 
-        fprintf(tokenFile, "(%s, CLOSEBRACE)\n", yytext); 
-        printf("(%s, CLOSEBRACE)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, CLOSEBRACE)\n", yylineno, yytext); 
+        printf("(%d, %s, CLOSEBRACE)\n", yylineno, yytext); 
         return CLOSEBRACE; 
       }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 155 ".\\lexer.l"
+#line 155 "lexer.l"
 { 
-        fprintf(tokenFile, "(%s, LEFTPAREN)\n", yytext); 
-        printf("(%s, LEFTPAREN)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, LEFTPAREN)\n", yylineno, yytext); 
+        printf("(%d, %s, LEFTPAREN)\n", yylineno, yytext); 
         return LEFTPAREN; 
       }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 161 ".\\lexer.l"
+#line 161 "lexer.l"
 { 
-        fprintf(tokenFile, "(%s, RIGHTPAREN)\n", yytext); 
-        printf("(%s, RIGHTPAREN)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, RIGHTPAREN)\n", yylineno, yytext); 
+        printf("(%d, %s, RIGHTPAREN)\n", yylineno, yytext); 
         return RIGHTPAREN;
         }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 167 ".\\lexer.l"
+#line 167 "lexer.l"
 {
-        fprintf(tokenFile, "(%s, ASSIGN)\n", yytext);
-        printf("(%s, ASSIGN)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, ASSIGN)\n", yylineno, yytext);
+        printf("(%d, %s, ASSIGN)\n", yylineno, yytext);
         return ASSIGN;
         }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 173 ".\\lexer.l"
+#line 173 "lexer.l"
 {
-        fprintf(tokenFile, "(%s, EQUAL)\n", yytext);
-        printf("(%s, EQUAL)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, EQUAL)\n", yylineno, yytext);
+        printf("(%d, %s, EQUAL)\n", yylineno, yytext);
         return EQUAL;
         }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 179 ".\\lexer.l"
+#line 179 "lexer.l"
 {
-        fprintf(tokenFile, "(%s, PLUS)\n", yytext);
-        printf("(%s, PLUS)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, PLUS)\n", yylineno, yytext);
+        printf("(%d, %s, PLUS)\n", yylineno, yytext);
         return PLUS;
         }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 185 ".\\lexer.l"
+#line 185 "lexer.l"
 {
-        fprintf(tokenFile, "(%s, MINUS)\n", yytext);
-        printf("(%s, MINUS)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, MINUS)\n", yylineno, yytext);
+        printf("(%d, %s, MINUS)\n", yylineno, yytext);
         return MINUS;
         }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 191 ".\\lexer.l"
+#line 191 "lexer.l"
 {
-        fprintf(tokenFile, "(%s, IDENTIFIER)\n", yytext);
-        printf("(%s, IDENTIFIER)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, IDENTIFIER)\n", yylineno, yytext);
+        printf("(%d, %s, IDENTIFIER)\n", yylineno, yytext);
         return IDENTIFIER;
         }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 197 ".\\lexer.l"
+#line 197 "lexer.l"
 {
-        fprintf(tokenFile, "(%s, NUMBER)\n", yytext);
-        printf("(%s, NUMBER)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, NUMBER)\n", yylineno, yytext);
+        printf("(%d, %s, NUMBER)\n", yylineno, yytext);
         return NUMBER;
         }
 	YY_BREAK
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 203 ".\\lexer.l"
+#line 203 "lexer.l"
 {
-        fprintf(tokenFile, "(%s, STRING)\n", yytext);
-        printf("(%s, STRING)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, STRING)\n", yylineno, yytext);
+        printf("(%d, %s, STRING)\n", yylineno, yytext);
         return STRING;
         }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 210 ".\\lexer.l"
+#line 210 "lexer.l"
 { /* ignore whitespace */ }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 212 ".\\lexer.l"
+#line 212 "lexer.l"
 { printf("Error on line %d: Unexpected character '%s'\n", yylineno, yytext); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 214 ".\\lexer.l"
+#line 214 "lexer.l"
 ECHO;
 	YY_BREAK
 #line 1129 "lex.yy.c"
@@ -2143,7 +2143,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 214 ".\\lexer.l"
+#line 214 "lexer.l"
 
 
 int yywrap() {

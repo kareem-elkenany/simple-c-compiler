@@ -1,1 +1,1 @@
-result is 10 plus 5 multiplied by 2 divided by x
+result is 10 plus 5 multiplied by 2 divided by

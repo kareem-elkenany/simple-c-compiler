@@ -71,138 +71,138 @@ WHITESPACE [ \t]+
         /* Multi-word operators first */
 
 {LESSOREQUAL} { 
-        fprintf(tokenFile, "(%s, LESSOREQUAL)\n", yytext); 
-        printf("(%s, LESSOREQUAL)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, LESSOREQUAL)\n", yylineno, yytext); 
+        printf("(%d, %s, LESSOREQUAL)\n", yylineno, yytext); 
         return LESSOREQUAL; 
       }
 
 {GREATEROREQUAL} { 
-        fprintf(tokenFile, "(%s, GREATEROREQUAL)\n", yytext); 
-        printf("(%s, GREATEROREQUAL)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, GREATEROREQUAL)\n", yylineno, yytext); 
+        printf("(%d, %s, GREATEROREQUAL)\n", yylineno, yytext); 
         return GREATEROREQUAL; 
       }
 
 {MULTIPLICATION} { 
-        fprintf(tokenFile, "(%s, MULTIPLICATION)\n", yytext); 
-        printf("(%s, MULTIPLICATION)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, MULTIPLICATION)\n", yylineno, yytext); 
+        printf("(%d, %s, MULTIPLICATION)\n", yylineno, yytext); 
         return MULTIPLICATION; 
       }
 
 {DIVISION} { 
-        fprintf(tokenFile, "(%s, DIVISION)\n", yytext); 
-        printf("(%s, DIVISION)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, DIVISION)\n", yylineno, yytext); 
+        printf("(%d, %s, DIVISION)\n", yylineno, yytext); 
         return DIVISION; 
       }
 
         /* the shorter phrases */
 
 {LESSTHAN} { 
-        fprintf(tokenFile, "(%s, LESSTHAN)\n", yytext); 
-        printf("(%s, LESSTHAN)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, LESSTHAN)\n", yylineno, yytext); 
+        printf("(%d, %s, LESSTHAN)\n", yylineno, yytext); 
         return LESSTHAN; 
       }
 
 {GREATERTHAN} { 
-        fprintf(tokenFile, "(%s, GREATERTHAN)\n", yytext); 
-        printf("(%s, GREATERTHAN)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, GREATERTHAN)\n", yylineno, yytext); 
+        printf("(%d, %s, GREATERTHAN)\n", yylineno, yytext); 
         return GREATERTHAN; 
       }
 
         /* Keywords and Braces */
 
 {IF} { 
-        fprintf(tokenFile, "(%s, IF)\n", yytext); 
-        printf("(%s, IF)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, IF)\n", yylineno, yytext); 
+        printf("(%d, %s, IF)\n", yylineno, yytext); 
         return IF; 
       }
 
 {ELSE} { 
-        fprintf(tokenFile, "(%s, ELSE)\n", yytext); 
-        printf("(%s, ELSE)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, ELSE)\n", yylineno, yytext); 
+        printf("(%d, %s, ELSE)\n", yylineno, yytext); 
         return ELSE; 
       }
 
 {WHILE} { 
-        fprintf(tokenFile, "(%s, WHILE)\n", yytext); 
-        printf("(%s, WHILE)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, WHILE)\n", yylineno, yytext); 
+        printf("(%d, %s, WHILE)\n", yylineno, yytext); 
         return WHILE; 
       }
 
 {PRINT} {
-        fprintf(tokenFile, "(%s, PRINT)\n", yytext);
-        printf("(%s, PRINT)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, PRINT)\n", yylineno, yytext);
+        printf("(%d, %s, PRINT)\n", yylineno, yytext);
         return PRINT;
         }
 
 {READ} {
-        fprintf(tokenFile, "(%s, READ)\n", yytext);
-        printf("(%s, READ)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, READ)\n", yylineno, yytext);
+        printf("(%d, %s, READ)\n", yylineno, yytext);
         return READ;
         }
 
 {OPENBRACE} { 
-        fprintf(tokenFile, "(%s, OPENBRACE)\n", yytext); 
-        printf("(%s, OPENBRACE)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, OPENBRACE)\n", yylineno, yytext); 
+        printf("(%d, %s, OPENBRACE)\n", yylineno, yytext); 
         return OPENBRACE; 
       }
 
 {CLOSEBRACE} { 
-        fprintf(tokenFile, "(%s, CLOSEBRACE)\n", yytext); 
-        printf("(%s, CLOSEBRACE)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, CLOSEBRACE)\n", yylineno, yytext); 
+        printf("(%d, %s, CLOSEBRACE)\n", yylineno, yytext); 
         return CLOSEBRACE; 
       }
 
 {LEFTPAREN} { 
-        fprintf(tokenFile, "(%s, LEFTPAREN)\n", yytext); 
-        printf("(%s, LEFTPAREN)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, LEFTPAREN)\n", yylineno, yytext); 
+        printf("(%d, %s, LEFTPAREN)\n", yylineno, yytext); 
         return LEFTPAREN; 
       }
 
 {RIGHTPAREN} { 
-        fprintf(tokenFile, "(%s, RIGHTPAREN)\n", yytext); 
-        printf("(%s, RIGHTPAREN)\n", yytext); 
+        fprintf(tokenFile, "(%d, %s, RIGHTPAREN)\n", yylineno, yytext); 
+        printf("(%d, %s, RIGHTPAREN)\n", yylineno, yytext); 
         return RIGHTPAREN;
         }
 
 {ASSIGN} {
-        fprintf(tokenFile, "(%s, ASSIGN)\n", yytext);
-        printf("(%s, ASSIGN)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, ASSIGN)\n", yylineno, yytext);
+        printf("(%d, %s, ASSIGN)\n", yylineno, yytext);
         return ASSIGN;
         }
 
 {EQUAL} {
-        fprintf(tokenFile, "(%s, EQUAL)\n", yytext);
-        printf("(%s, EQUAL)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, EQUAL)\n", yylineno, yytext);
+        printf("(%d, %s, EQUAL)\n", yylineno, yytext);
         return EQUAL;
         }
 
 {PLUS} {
-        fprintf(tokenFile, "(%s, PLUS)\n", yytext);
-        printf("(%s, PLUS)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, PLUS)\n", yylineno, yytext);
+        printf("(%d, %s, PLUS)\n", yylineno, yytext);
         return PLUS;
         }
 
 {MINUS} {
-        fprintf(tokenFile, "(%s, MINUS)\n", yytext);
-        printf("(%s, MINUS)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, MINUS)\n", yylineno, yytext);
+        printf("(%d, %s, MINUS)\n", yylineno, yytext);
         return MINUS;
         }
 
 {IDENTIFIER} {
-        fprintf(tokenFile, "(%s, IDENTIFIER)\n", yytext);
-        printf("(%s, IDENTIFIER)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, IDENTIFIER)\n", yylineno, yytext);
+        printf("(%d, %s, IDENTIFIER)\n", yylineno, yytext);
         return IDENTIFIER;
         }
 
 {NUMBER} {
-        fprintf(tokenFile, "(%s, NUMBER)\n", yytext);
-        printf("(%s, NUMBER)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, NUMBER)\n", yylineno, yytext);
+        printf("(%d, %s, NUMBER)\n", yylineno, yytext);
         return NUMBER;
         }
 
 {STRING} {
-        fprintf(tokenFile, "(%s, STRING)\n", yytext);
-        printf("(%s, STRING)\n", yytext);
+        fprintf(tokenFile, "(%d, %s, STRING)\n", yylineno, yytext);
+        printf("(%d, %s, STRING)\n", yylineno, yytext);
         return STRING;
         }
 
@@ -245,9 +245,3 @@ int main(int argc, char **argv) {
     
     return 0;
 }
-
-
-
-
-
-
