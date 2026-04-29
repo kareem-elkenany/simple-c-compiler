@@ -1,5 +1,6 @@
 import os
 import re
+from graphviz import Digraph
 
 # =====================================================
 # Recursive Decent Parser
@@ -274,19 +275,92 @@ class Parser:
 
         raise SyntaxError(f"Unexpected token {token[0]} at line {token[2]}")
 
+# =====================================================
+# AST Visualizer
+# =====================================================
+class ASTVisualizer:
+    def __init__(self):
+        self.graph = Digraph("AST", format="png")
+        self.graph.attr(rankdir="TB")
+        self.graph.attr("node", fontname="Arial", fontsize="12")
+        self.node_count = 0
+
+        self.statement_nodes = {
+            "PROGRAM", "READ", "PRINT", "ASSIGN", "IF", "WHILE", "BLOCK"
+        }
+
+        self.expression_nodes = {
+            "PLUS", "MINUS", "MULTIPLICATION", "DIVISION"
+        }
+
+        self.condition_nodes = {
+            "LESSTHAN", "GREATERTHAN", "LESSOREQUAL",
+            "GREATEROREQUAL", "EQUAL"
+        }
+
+    def get_shape(self, value):
+        if value in self.statement_nodes:
+            return "box"          # rectangle for statements
+        elif value in self.expression_nodes:
+            return "ellipse"      # oval for expressions
+        elif value in self.condition_nodes:
+            return "diamond"      # optional: diamond for conditions
+        else:
+            return "oval"         # identifiers, numbers, strings
+
+    def new_id(self):
+        self.node_count += 1
+        return f"node{self.node_count}"
+
+    def add_ast_node(self, ast_node, parent_id=None):
+        current_id = self.new_id()
+
+        self.graph.node(
+            current_id,
+            label=str(ast_node.value),
+            shape=self.get_shape(ast_node.value)
+        )
+
+        if parent_id is not None:
+            self.graph.edge(parent_id, current_id)
+
+        for child in ast_node.children:
+            if isinstance(child, Node):
+                self.add_ast_node(child, current_id)
+            else:
+                child_id = self.new_id()
+                self.graph.node(child_id, label=str(child), shape="oval")
+                self.graph.edge(current_id, child_id)
+
+    def render(self, ast_root, output_path):
+        self.add_ast_node(ast_root)
+        self.graph.render(output_path, cleanup=True)
+        print(f"AST image exported to: {output_path}.png")
 
 # =====================================================
 # MAIN
 # =====================================================
 if __name__ == "__main__":
     try:
-        tokens = read_tokens("scanner/tokens.txt")
+        # Get the project root folder
+        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+        # Input tokens file
+        tokens_path = os.path.join(BASE_DIR, "scanner", "tokens.txt")
+
+        # Output AST image path
+        output_path = os.path.join(BASE_DIR, "output", "ast_output")
+
+        tokens = read_tokens(tokens_path)
 
         parser = Parser(tokens)
         ast = parser.parse_program()
 
         print("===== PARSING SUCCESSFUL =====")
         print(ast.pretty())
+
+        visualizer = ASTVisualizer()
+        visualizer.render(ast, output_path)
 
     except Exception as e:
         print("ERROR:", e)
