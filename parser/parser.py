@@ -1,6 +1,44 @@
 import os
 import re
 from graphviz import Digraph
+import urllib.request
+import zipfile
+
+GRAPHVIZ_DIR = os.path.join(os.path.dirname(__file__), ".graphviz")
+
+GRAPHVIZ_BIN = os.path.join(GRAPHVIZ_DIR, "bin", "dot.exe") 
+
+def ensure_graphviz():
+    # Note: Because of your dynamic folder extraction below, GRAPHVIZ_BIN as defined 
+    # at the top might not perfectly match unless you update it. The dynamic PATH 
+    # adjustment you wrote at the bottom works perfectly, though!
+    
+    # Just checking if the tool is already on the path or exists locally
+    if os.path.exists(GRAPHVIZ_BIN) or "dot.exe" in os.environ.get("PATH", ""):
+        return
+
+    print("Graphviz not found. Downloading...")
+
+    # Updated URL to the exact 14.1.5 Windows 64-bit release
+    url = "https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/14.1.5/windows_10_cmake_Release_Graphviz-14.1.5-win64.zip"
+    zip_path = os.path.join(GRAPHVIZ_DIR, "graphviz.zip")
+
+    os.makedirs(GRAPHVIZ_DIR, exist_ok=True)
+
+    urllib.request.urlretrieve(url, zip_path)
+
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall(GRAPHVIZ_DIR)
+
+    os.remove(zip_path)
+
+    # Adjust path depending on extracted folder name (e.g., Graphviz-14.1.5-win64)
+    extracted_folder = next(os.scandir(GRAPHVIZ_DIR)).path
+    bin_path = os.path.join(extracted_folder, "bin")
+
+    os.environ["PATH"] = bin_path + os.pathsep + os.environ.get("PATH", "")
+
+ensure_graphviz()
 
 # =====================================================
 # Recursive Decent Parser
