@@ -403,4 +403,5 @@ if __name__ == "__main__":
         visualizer.render(ast, output_path)
 
     except Exception as e:
-        print("ERROR:", e)
+        print("Parser Error:", e)
+        raise Exception(e)

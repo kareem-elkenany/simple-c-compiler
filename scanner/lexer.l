@@ -209,7 +209,10 @@ WHITESPACE [ \t]+
 
 {WHITESPACE} { /* ignore whitespace */ }
 
-. { printf("Error on line %d: Unexpected character '%s'\n", yylineno, yytext); }
+. { 
+    fprintf(stderr, "Lexical Error on line %d: Unexpected character '%s'\n", yylineno, yytext);
+    exit(1); 
+  }
 
 %%
 

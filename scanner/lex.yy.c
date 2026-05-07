@@ -1119,14 +1119,17 @@ YY_RULE_SETUP
 case 25:
 YY_RULE_SETUP
 #line 212 "lexer.l"
-{ printf("Error on line %d: Unexpected character '%s'\n", yylineno, yytext); }
+{ 
+    fprintf(stderr, "Lexical Error on line %d: Unexpected character '%s'\n", yylineno, yytext);
+    exit(1); 
+  }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 214 "lexer.l"
+#line 217 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 1129 "lex.yy.c"
+#line 1132 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2143,7 +2146,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 214 "lexer.l"
+#line 217 "lexer.l"
 
 
 int yywrap() {
@@ -2178,10 +2181,3 @@ int main(int argc, char **argv) {
     
     return 0;
 }
-
-
-
-
-
-
-
