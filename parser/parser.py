@@ -6,7 +6,7 @@ import zipfile
 
 GRAPHVIZ_DIR = os.path.join(os.path.dirname(__file__), ".graphviz")
 
-GRAPHVIZ_BIN = os.path.join(GRAPHVIZ_DIR, "bin", "dot.exe") 
+GRAPHVIZ_BIN = os.path.join(GRAPHVIZ_DIR, "Graphviz-14.1.5-win64", "bin", "dot.exe")
 
 def ensure_graphviz():
     # Note: Because of your dynamic folder extraction below, GRAPHVIZ_BIN as defined 
@@ -14,7 +14,9 @@ def ensure_graphviz():
     # adjustment you wrote at the bottom works perfectly, though!
     
     # Just checking if the tool is already on the path or exists locally
-    if os.path.exists(GRAPHVIZ_BIN) or "dot.exe" in os.environ.get("PATH", ""):
+    if os.path.exists(GRAPHVIZ_BIN):
+        bin_path = os.path.dirname(GRAPHVIZ_BIN)
+        os.environ["PATH"] = bin_path + os.pathsep + os.environ.get("PATH", "")
         return
 
     print("Graphviz not found. Downloading...")
