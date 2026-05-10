@@ -1,1 +1,5 @@
-result is 10 plus 5 multiplied by 2 divided by
+x is 5
+show x
+if x equal 5 {
+    show x
+}

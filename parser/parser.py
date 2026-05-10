@@ -40,6 +40,13 @@ def read_tokens(filename):
             if not line:
                 continue
 
+            # Match EOL token in both forms: (\\n, EOL) or (1, \\n, EOL)
+            if ", EOL)" in line:
+                match_line = re.match(r'^\((\d+),', line)
+                line_no = int(match_line.group(1)) if match_line else (tokens[-1][2] if tokens else 1)
+                tokens.append(("EOL", r"\n", line_no))
+                continue
+
             # Match (line, value, TYPE)
             match = re.match(r'^\((\d+),\s*(.*?),\s*(.*?)\)$', line)
 
