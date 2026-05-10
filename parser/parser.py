@@ -1,5 +1,6 @@
 import os
 import re
+import shutil
 from graphviz import Digraph
 import urllib.request
 import zipfile
@@ -9,23 +10,41 @@ GRAPHVIZ_DIR = os.path.join(os.path.dirname(__file__), ".graphviz")
 GRAPHVIZ_BIN = os.path.join(GRAPHVIZ_DIR, "Graphviz-14.1.5-win64", "bin", "dot.exe")
 
 def ensure_graphviz():
-    # Note: Because of your dynamic folder extraction below, GRAPHVIZ_BIN as defined 
-    # at the top might not perfectly match unless you update it. The dynamic PATH 
-    # adjustment you wrote at the bottom works perfectly, though!
-    
-    # Just checking if the tool is already on the path or exists locally
+    # Prefer a system-installed dot binary if available on PATH.
+    dot_path = shutil.which("dot")
+
+    # Also check the common Windows Graphviz install directories if PATH is not set.
+    if not dot_path:
+        possible_locations = [
+            os.path.join(os.environ.get("ProgramFiles", "C:\\Program Files"), "Graphviz", "bin", "dot.exe"),
+            os.path.join(os.environ.get("ProgramFiles(x86)", "C:\\Program Files (x86)"), "Graphviz", "bin", "dot.exe"),
+        ]
+        for candidate in possible_locations:
+            if os.path.exists(candidate):
+                dot_path = candidate
+                break
+
+    if dot_path:
+        bin_path = os.path.dirname(dot_path)
+        os.environ["PATH"] = bin_path + os.pathsep + os.environ.get("PATH", "")
+        return
+
+    # Check for a local downloaded Graphviz binary first.
     if os.path.exists(GRAPHVIZ_BIN):
         bin_path = os.path.dirname(GRAPHVIZ_BIN)
         os.environ["PATH"] = bin_path + os.pathsep + os.environ.get("PATH", "")
         return
 
-    print("Graphviz not found. Downloading...")
+    print("Graphviz not found locally. Downloading...")
 
     # Updated URL to the exact 14.1.5 Windows 64-bit release
     url = "https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/14.1.5/windows_10_cmake_Release_Graphviz-14.1.5-win64.zip"
     zip_path = os.path.join(GRAPHVIZ_DIR, "graphviz.zip")
 
     os.makedirs(GRAPHVIZ_DIR, exist_ok=True)
+
+    if os.path.exists(zip_path) and os.path.getsize(zip_path) == 0:
+        os.remove(zip_path)
 
     urllib.request.urlretrieve(url, zip_path)
 
@@ -145,6 +164,12 @@ class Parser:
 
             statements.append(self.parse_statement())
 
+            if self.current()[0] not in ("EOL", "EOF"):
+                token = self.current()
+                raise SyntaxError(
+                    f"Expected EOL or EOF after statement, found {token[0]} ({token[1]}) at line {token[2]}"
+                )
+
             while self.current()[0] == "EOL":
                 self.match("EOL")
 
@@ -238,6 +263,12 @@ class Parser:
                 continue
 
             statements.append(self.parse_statement())
+
+            if self.current()[0] not in ("EOL", "EOF", "CLOSEBRACE"):
+                token = self.current()
+                raise SyntaxError(
+                    f"Expected EOL or EOF after statement, found {token[0]} ({token[1]}) at line {token[2]}"
+                )
 
             while self.current()[0] == "EOL":
                 self.match("EOL")

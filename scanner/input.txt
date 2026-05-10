@@ -1,5 +1,3 @@
-x is 5
-show x
-if x equal 5 {
-    show x
-}
+x is 2 
+y is 3
+z is x y
