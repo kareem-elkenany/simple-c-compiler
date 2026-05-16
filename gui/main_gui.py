@@ -7,27 +7,53 @@ from PySide6.QtWidgets import (QApplication, QMainWindow, QLabel, QWidget,
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QDragLeaveEvent, QPixmap, QFont
 from pathlib import Path
-from pathlib import Path
 
+# Expose the repo root so the parser module can be imported from a sibling folder.
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
- 
+try:
+    from parser import parser as parser_module
+except ImportError as e:
+    raise ImportError(
+        f"Unable to import local parser module from {ROOT_DIR / 'parser'}. "
+        "Run from repository root or install dependencies."
+    ) from e
+
 # Application -> What is running
 # Window -> The Actual Window
-# Widget -> A container within the window, or an interactable
+# Widget -> An interactable
 # Layout -> The layout applied to a widget
 # Label -> Text
 
 
+def resource_path(relative_path):
+    """Get absolute path to resource, works for dev and PyInstaller onefile."""
+    base_path = Path(getattr(sys, '_MEIPASS', Path(__file__).resolve().parent))
+    return (base_path / relative_path).resolve()
+
+
+def get_output_dir():
+    if getattr(sys, 'frozen', False):
+        exe_dir = Path(sys.argv[0]).resolve().parent
+        output_dir = exe_dir / 'output'
+    else:
+        output_dir = Path(__file__).resolve().parent.parent / 'output'
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return output_dir
+
 
 # 1. Get the directory of the current script
 current_dir = Path(__file__).resolve().parent
+output_dir = get_output_dir()
 
-input_file_path = current_dir.parent / "scanner" / "input.txt"
-scanner_file_path = current_dir.parent / "scanner" / "scanner.exe"
-tokens_file_path = current_dir.parent / "scanner" / "tokens.txt"
-parser_file_path = current_dir.parent / "parser" / "parser.py"
-output_file_path = current_dir.parent / "output" / "ast_output.png"
-easter_egg_path = current_dir.parent / "Doom" / "uzdoom.exe"
+input_file_path = output_dir / 'input.txt'
+scanner_file_path = resource_path('scanner/scanner.exe')
+tokens_file_path = output_dir / 'tokens.txt'
+parser_output_path = output_dir / 'ast_output'
+output_file_path = output_dir / 'ast_output.png'
+easter_egg_path = resource_path('Doom/uzdoom.exe')
 
 
 class FileDropTextEdit(QTextEdit):
@@ -177,8 +203,8 @@ class DoomApp(QMainWindow):
         self.timer.timeout.connect(self.check_for_doom_window)
 
     def launch_doom(self):        
-        # Launch the executable in the background
-        subprocess.Popen([easter_egg_path])
+        # Launch the executable in the background from its own folder
+        subprocess.Popen([str(easter_egg_path)], cwd=str(easter_egg_path.parent))
         
         # Start checking for the window every 200 milliseconds
         self.timer.start(200)
@@ -297,8 +323,8 @@ class MainWindow(QMainWindow):
             # =======================
             try:
                 result = subprocess.run(
-                    [scanner_file_path],
-                    cwd=scanner_file_path.parent,
+                    [str(scanner_file_path)],
+                    cwd=str(output_dir),
                     capture_output=True,
                     text=True,
                     check=True
@@ -308,24 +334,22 @@ class MainWindow(QMainWindow):
                 print(result.stdout)
                 print("scanner.exe finished successfully")
 
-            except Exception as e:
-
+            except subprocess.CalledProcessError as e:
                 print("Error while running scanner.exe")
-                raise Exception(e.stderr)
+                raise Exception(e.stderr or e.stdout)
+            except Exception as e:
+                print("Error while running scanner.exe")
+                raise
             
             # =======================
             # Run parser            
             # =======================
             try:
-                result = subprocess.run(
-                    [sys.executable, parser_file_path],
-                    capture_output=True,
-                    text=True,
-                    check=True
-                )
-                print("Parser Output\n===========================")
-                print(result.stdout)
+                parser_module.run_parser(str(tokens_file_path), str(parser_output_path))
                 print("Parser finished successfully!")
+            except Exception as e:
+                print("Error while running parser logic")
+                raise
 
 
             except Exception as e:

@@ -1,6 +1,7 @@
 import os
 import re
 import shutil
+import argparse
 from graphviz import Digraph
 import urllib.request
 import zipfile
@@ -60,6 +61,14 @@ def ensure_graphviz():
     os.environ["PATH"] = bin_path + os.pathsep + os.environ.get("PATH", "")
 
 ensure_graphviz()
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Simple C Compiler Parser")
+    parser.add_argument("--tokens", help="Path to the scanner token file")
+    parser.add_argument("--output", help="Output base path for generated AST image")
+    return parser.parse_args()
+
 
 # =====================================================
 # Recursive Decent Parser
@@ -415,19 +424,38 @@ class ASTVisualizer:
         self.graph.render(output_path, cleanup=True)
         print(f"AST image exported to: {output_path}.png")
 
+
+def run_parser(tokens_path, output_path):
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    tokens = read_tokens(tokens_path)
+    parser = Parser(tokens)
+    ast = parser.parse_program()
+    print("===== PARSING SUCCESSFUL =====")
+    print(ast.pretty())
+    visualizer = ASTVisualizer()
+    visualizer.render(ast, output_path)
+
+
 # =====================================================
 # MAIN
 # =====================================================
 if __name__ == "__main__":
     try:
-        # Get the project root folder
-        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        args = parse_args()
 
-        # Input tokens file
-        tokens_path = os.path.join(BASE_DIR, "scanner", "tokens.txt")
+        if args.tokens:
+            tokens_path = args.tokens
+        else:
+            BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            tokens_path = os.path.join(BASE_DIR, "scanner", "tokens.txt")
 
-        # Output AST image path
-        output_path = os.path.join(BASE_DIR, "output", "ast_output")
+        if args.output:
+            output_path = args.output
+        else:
+            BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            output_path = os.path.join(BASE_DIR, "output", "ast_output")
+
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
         tokens = read_tokens(tokens_path)
 
